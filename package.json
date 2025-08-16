@@ -1,0 +1,45 @@
+{
+    "name": "ssn-openread",
+    "version": "0.2.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@heroicons/react": "^2.1.5",
+        "@prisma/client": "^5.21.1",
+        "@vercel/blob": "^0.25.1",
+        "bcrypt": "^5.1.1",
+        "clsx": "^2.1.1",
+        "express": "^4.21.1",
+        "iron-session": "^8.0.3",
+        "lucide-react": "^0.454.0",
+        "mysql2": "^3.11.4",
+        "next": "^15.1.0", 
+        "next-form": "^1.0.0",
+        "pdf-lib": "^1.17.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",  
+        "react-hot-toast": "^2.4.1",
+        "react-pageflip": "^2.0.3",
+        "react-pdf": "^9.1.1",
+        "screenfull": "^6.0.2",
+        "tailwind-merge": "^2.5.4",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/node": "^22",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "postcss": "^8",
+        "prettier": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.6.8",
+        "prisma": "^5.21.1",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5.7.0"
+    }
+}
