@@ -179,7 +179,7 @@ export default async function page({ params }: PageProps) {
                                     <Link 
                                         href={book.pdfUrl}
                                         target="_blank"
-                                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                     >
                                         <BookOpenIcon className="h-5 w-5" />
                                         เปิดในแท็บใหม่

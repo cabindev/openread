@@ -155,7 +155,7 @@ export default function PDFViewer({ pdfUrl }: PDFViewerProps) {
                    <Link
                        href={pdfUrl}
                        target="_blank"
-                       className="rounded-lg p-2 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200 border border-orange-200 hover:border-orange-300"
+                       className="rounded-lg p-2 hover:bg-green-50 text-green-600 hover:text-green-700 transition-all duration-200 border border-green-200 hover:border-green-300"
                        title="เปิดในแท็บใหม่"
                    >
                        <FileSearch className="h-4 w-4" />
