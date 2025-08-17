@@ -49,22 +49,22 @@ export default async function page({ searchParams }: PageProps) {
                             </div>
                         </div>
                         
-                        <div className="bg-gradient-to-br from-blue-100 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                        <div className="bg-gradient-to-br from-green-200 to-emerald-200 rounded-2xl p-6 border border-green-300">
                             <div className="flex items-center gap-3 mb-2">
-                                <UserGroupIcon className="h-6 w-6 text-blue-600" />
-                                <span className="text-blue-700 font-medium">หน้าปัจจุบัน</span>
+                                <UserGroupIcon className="h-6 w-6 text-green-700" />
+                                <span className="text-green-800 font-medium">หน้าปัจจุบัน</span>
                             </div>
-                            <div className="text-3xl font-bold text-blue-800">
+                            <div className="text-3xl font-bold text-green-900">
                                 {memberPagination.currentPage}
                             </div>
                         </div>
 
-                        <div className="bg-gradient-to-br from-teal-100 to-cyan-100 rounded-2xl p-6 border border-teal-200">
+                        <div className="bg-gradient-to-br from-emerald-200 to-green-200 rounded-2xl p-6 border border-emerald-300">
                             <div className="flex items-center gap-3 mb-2">
-                                <UsersIcon className="h-6 w-6 text-teal-600" />
-                                <span className="text-teal-700 font-medium">จำนวนหน้า</span>
+                                <UsersIcon className="h-6 w-6 text-emerald-700" />
+                                <span className="text-emerald-800 font-medium">จำนวนหน้า</span>
                             </div>
-                            <div className="text-3xl font-bold text-teal-800">
+                            <div className="text-3xl font-bold text-emerald-900">
                                 {memberPagination.totalPages}
                             </div>
                         </div>
