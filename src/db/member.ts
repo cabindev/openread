@@ -1,4 +1,4 @@
-import prisma from "~/prisma";
+import prisma from "../../prisma";
 
 export async function getMembers() {
     const members = await prisma.member.findMany({

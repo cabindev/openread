@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "~/prisma";
+import prisma from "../../prisma";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { signInSchema, signUpSchema } from "~/schemas";

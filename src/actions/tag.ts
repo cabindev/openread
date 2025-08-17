@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { getSession } from "~/libs";
-import prisma from "~/prisma";
+import prisma from "../../prisma";
 import { createTagSchema, updateTagSchema } from "~/schemas";
 
 export async function createTagAction(_: any, formData: FormData) {

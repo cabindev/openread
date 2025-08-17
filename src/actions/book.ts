@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import prisma from "~/prisma";
+import prisma from "../../prisma";
 import { redirect } from "next/navigation";
 import { getSession } from "~/libs";
 import { uploadFile } from "./upload-file";

@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "~/prisma";
+import prisma from "../../prisma";
 import { redirect } from "next/navigation";
 import { updateMemberSchema } from "~/schemas";
 import { getSession } from "~/libs";
