@@ -11,6 +11,10 @@ export const metadata: Metadata = {
         template: "%s | SSN OpenRead",
         default: "SSN OpenRead",
     },
+    description: "ศูนย์รวมหนังสือดิจิทัลคุณภาพสูง - SSN OpenRead",
+    icons: {
+        icon: '/favicon.ico',
+    },
 };
 
 interface LayoutProps {
