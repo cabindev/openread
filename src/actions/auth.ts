@@ -55,8 +55,6 @@ export async function signInAction(_: any, formData: FormData) {
 }
 
 export async function signUpAction(_: any, formData: FormData) {
-    let isSuccess: boolean = false;
-
     try {
         const formRaw = Object.fromEntries(formData);
         const validated = signUpSchema.parse(formRaw);
@@ -81,13 +79,14 @@ export async function signUpAction(_: any, formData: FormData) {
             },
         });
 
-        isSuccess = true;
+        return {
+            success: true,
+            message: "สมัครสมาชิกสำเร็จ",
+        };
     } catch (error) {
         return {
             success: false,
             message: "สมัครสมาชิกไม่สำเร็จ",
         };
     }
-
-    if (isSuccess) redirect("/auth/sign-in");
 }

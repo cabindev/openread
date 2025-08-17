@@ -20,8 +20,8 @@ export default function SignUpForm() {
            
            if (result?.success === false) {
                toast.error(result.message);
-           } else {
-               toast.success('สมัครสมาชิกสำเร็จ');
+           } else if (result?.success === true) {
+               toast.success(result.message);
                router.push('/auth/sign-in');
                router.refresh();
            }
