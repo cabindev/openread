@@ -71,83 +71,91 @@ export default function PDFViewer({ pdfUrl }: PDFViewerProps) {
    return (
        <div
            ref={containerRef}
-           className="relative flex min-h-[600px] items-center justify-center rounded-xl border border-green-100 bg-gradient-to-br from-gray-50 to-green-50/30 overflow-hidden"
+           className="relative flex min-h-[700px] items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden"
        >
-           {/* Enhanced control bar */}
-           <div className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-xl bg-white/95 backdrop-blur-md p-3 shadow-lg border border-green-100">
-               {/* Zoom controls */}
-               <div className="flex items-center gap-1 px-2">
-                   <span className="text-xs text-gray-500 mr-2">ซูม:</span>
-                   <button onClick={() => setZoomLevel(0.5)} 
-                       className={`text-xs rounded-lg px-3 py-1.5 font-medium transition-all duration-200 ${
-                           scale === 0.5 
-                               ? 'bg-green-100 text-green-700 border border-green-200' 
-                               : 'hover:bg-green-50 text-gray-600 hover:text-green-600'
-                       }`}>
-                       50%
-                   </button>
-                   <button onClick={() => setZoomLevel(1)} 
-                       className={`text-xs rounded-lg px-3 py-1.5 font-medium transition-all duration-200 ${
-                           scale === 1 
-                               ? 'bg-green-100 text-green-700 border border-green-200' 
-                               : 'hover:bg-green-50 text-gray-600 hover:text-green-600'
-                       }`}>
-                       100%
-                   </button>
-                   <button onClick={() => setZoomLevel(1.7)} 
-                       className={`text-xs rounded-lg px-3 py-1.5 font-medium transition-all duration-200 ${
-                           scale === 1.7 
-                               ? 'bg-green-100 text-green-700 border border-green-200' 
-                               : 'hover:bg-green-50 text-gray-600 hover:text-green-600'
-                       }`}>
-                       170%
-                   </button>
-               </div>
-
-               <div className="mx-2 h-6 w-px bg-green-200" />
-
-               {/* Page navigation */}
-               <div className="flex items-center gap-1">
+           {/* Enhanced floating control bar */}
+           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-2 rounded-2xl bg-white/98 backdrop-blur-lg p-4 shadow-2xl border border-gray-300">
+               {/* Page navigation - move to front */}
+               <div className="flex items-center gap-2">
                    <button
                        onClick={prevPage}
                        disabled={pageNumber <= 1}
-                       className="rounded-lg p-2 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed text-green-600 hover:text-green-700 transition-all duration-200"
+                       className="rounded-lg p-2 hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed text-blue-600 hover:text-blue-700 transition-all duration-200 border border-blue-200 hover:border-blue-300"
                    >
                        <ChevronLeft className="h-4 w-4" />
                    </button>
-                   <div className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-lg border border-green-100">
-                       <span className="text-sm font-medium text-green-800">
+                   <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                       <span className="text-sm font-bold text-blue-800">
                            {pageNumber}
                        </span>
-                       <span className="text-xs text-green-600">/</span>
-                       <span className="text-sm text-green-600">
+                       <span className="text-xs text-blue-600">/</span>
+                       <span className="text-sm font-medium text-blue-700">
                            {numPages || "-"}
                        </span>
                    </div>
                    <button
                        onClick={nextPage}
                        disabled={pageNumber >= (numPages || 1)}
-                       className="rounded-lg p-2 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed text-green-600 hover:text-green-700 transition-all duration-200"
+                       className="rounded-lg p-2 hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed text-blue-600 hover:text-blue-700 transition-all duration-200 border border-blue-200 hover:border-blue-300"
                    >
                        <ChevronRight className="h-4 w-4" />
                    </button>
                </div>
 
-               <div className="mx-2 h-6 w-px bg-green-200" />
+               <div className="mx-2 h-8 w-px bg-gray-300" />
 
-               {/* Additional controls */}
-               <div className="flex items-center gap-1">
+               {/* Enhanced zoom controls */}
+               <div className="flex items-center gap-2">
+                   <span className="text-xs font-medium text-gray-600 mr-1">ซูม:</span>
+                   <button onClick={() => setZoomLevel(0.6)} 
+                       className={`text-xs rounded-lg px-3 py-2 font-semibold transition-all duration-200 border ${
+                           scale === 0.6 
+                               ? 'bg-green-500 text-white border-green-600 shadow-lg' 
+                               : 'bg-white hover:bg-green-50 text-gray-700 hover:text-green-700 border-gray-300 hover:border-green-400'
+                       }`}>
+                       60%
+                   </button>
+                   <button onClick={() => setZoomLevel(1)} 
+                       className={`text-xs rounded-lg px-3 py-2 font-semibold transition-all duration-200 border ${
+                           scale === 1 
+                               ? 'bg-green-500 text-white border-green-600 shadow-lg' 
+                               : 'bg-white hover:bg-green-50 text-gray-700 hover:text-green-700 border-gray-300 hover:border-green-400'
+                       }`}>
+                       100%
+                   </button>
+                   <button onClick={() => setZoomLevel(1.5)} 
+                       className={`text-xs rounded-lg px-3 py-2 font-semibold transition-all duration-200 border ${
+                           scale === 1.5 
+                               ? 'bg-green-500 text-white border-green-600 shadow-lg' 
+                               : 'bg-white hover:bg-green-50 text-gray-700 hover:text-green-700 border-gray-300 hover:border-green-400'
+                       }`}>
+                       150%
+                   </button>
+                   <button onClick={() => setZoomLevel(2)} 
+                       className={`text-xs rounded-lg px-3 py-2 font-semibold transition-all duration-200 border ${
+                           scale === 2 
+                               ? 'bg-green-500 text-white border-green-600 shadow-lg' 
+                               : 'bg-white hover:bg-green-50 text-gray-700 hover:text-green-700 border-gray-300 hover:border-green-400'
+                       }`}>
+                       200%
+                   </button>
+               </div>
+
+               <div className="mx-2 h-8 w-px bg-gray-300" />
+
+               {/* Quick action buttons */}
+               <div className="flex items-center gap-2">
                    <button
                        onClick={toggleFullScreen}
-                       className="rounded-lg p-2 hover:bg-green-50 text-green-600 hover:text-green-700 transition-all duration-200"
-                       title="เต็มจอ"
+                       className="rounded-lg p-2 hover:bg-purple-50 text-purple-600 hover:text-purple-700 transition-all duration-200 border border-purple-200 hover:border-purple-300"
+                       title="เต็มจอ (F11)"
                    >
                        <Maximize className="h-4 w-4" />
                    </button>
                    <Link
                        href={pdfUrl}
                        target="_blank"
-                       className="rounded-lg p-2 hover:bg-green-50 text-green-600 hover:text-green-700 transition-all duration-200"
+                       className="rounded-lg p-2 hover:bg-orange-50 text-orange-600 hover:text-orange-700 transition-all duration-200 border border-orange-200 hover:border-orange-300"
                        title="เปิดในแท็บใหม่"
                    >
                        <FileSearch className="h-4 w-4" />
@@ -155,23 +163,37 @@ export default function PDFViewer({ pdfUrl }: PDFViewerProps) {
                </div>
            </div>
 
-           <div className="max-h-full max-w-full overflow-auto">
-               <Document
-                   file={pdfUrl}
-                   onLoadSuccess={onDocumentLoadSuccess}
-                   onLoadError={onDocumentLoadError}
-                   loading={<LoadingSpinner />}
-                   error={<ErrorDisplay />}
-               >
-                   <Page
-                       pageNumber={pageNumber}
-                       scale={scale}
-                       renderAnnotationLayer={false}
-                       renderTextLayer={false}
+           {/* Enhanced PDF display area */}
+           <div className="max-h-full max-w-full overflow-auto bg-white rounded-xl shadow-inner p-6 m-4">
+               <div className="flex justify-center">
+                   <Document
+                       file={pdfUrl}
+                       onLoadSuccess={onDocumentLoadSuccess}
+                       onLoadError={onDocumentLoadError}
                        loading={<LoadingSpinner />}
-                   />
-               </Document>
+                       error={<ErrorDisplay />}
+                   >
+                       <div className="shadow-2xl rounded-lg overflow-hidden border border-gray-300">
+                           <Page
+                               pageNumber={pageNumber}
+                               scale={scale}
+                               renderAnnotationLayer={false}
+                               renderTextLayer={false}
+                               loading={<LoadingSpinner />}
+                           />
+                       </div>
+                   </Document>
+               </div>
            </div>
+
+           {/* Reading progress indicator */}
+           {numPages && (
+               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
+                   <div className="bg-black/80 text-white px-4 py-2 rounded-full text-xs font-medium">
+                       หน้า {pageNumber} จาก {numPages} ({Math.round((pageNumber / numPages) * 100)}%)
+                   </div>
+               </div>
+           )}
        </div>
    );
 }
