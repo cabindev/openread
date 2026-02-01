@@ -1,5 +1,9 @@
-import { NextResponse } from "next/server";
 import prisma from "../../../../prisma";
+import { handleOptions, jsonResponse } from "../cors";
+
+export async function OPTIONS() {
+  return handleOptions();
+}
 
 export async function GET() {
   try {
@@ -20,12 +24,12 @@ export async function GET() {
       updatedAt: tag.updatedAt,
     }));
 
-    return NextResponse.json({ data });
+    return jsonResponse({ data });
   } catch (error) {
     console.error("Error fetching tags:", error);
-    return NextResponse.json(
+    return jsonResponse(
       { success: false, message: "เกิดข้อผิดพลาดภายในระบบ" },
-      { status: 500 }
+      500
     );
   }
 }

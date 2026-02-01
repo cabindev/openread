@@ -1,5 +1,9 @@
-import { NextResponse } from "next/server";
 import prisma from "../../../../prisma";
+import { handleOptions, jsonResponse } from "../cors";
+
+export async function OPTIONS() {
+  return handleOptions();
+}
 
 export async function GET() {
   try {
@@ -25,7 +29,7 @@ export async function GET() {
         }),
       ]);
 
-    return NextResponse.json({
+    return jsonResponse({
       stats: {
         total_books: totalBooks,
         total_views: totalViews._sum.views || 0,
@@ -42,9 +46,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error fetching dashboard:", error);
-    return NextResponse.json(
+    return jsonResponse(
       { success: false, message: "เกิดข้อผิดพลาดภายในระบบ" },
-      { status: 500 }
+      500
     );
   }
 }

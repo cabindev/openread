@@ -1,5 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "../../../../../prisma";
+import { handleOptions, jsonResponse } from "../../cors";
+
+export async function OPTIONS() {
+  return handleOptions();
+}
 
 export async function GET(
   request: NextRequest,
@@ -14,18 +19,18 @@ export async function GET(
     });
 
     if (!book) {
-      return NextResponse.json(
+      return jsonResponse(
         { success: false, message: "ไม่พบหนังสือที่ต้องการ" },
-        { status: 404 }
+        404
       );
     }
 
-    return NextResponse.json({ data: book });
+    return jsonResponse({ data: book });
   } catch (error) {
     console.error("Error fetching book:", error);
-    return NextResponse.json(
+    return jsonResponse(
       { success: false, message: "เกิดข้อผิดพลาดภายในระบบ" },
-      { status: 500 }
+      500
     );
   }
 }

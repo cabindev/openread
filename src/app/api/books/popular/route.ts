@@ -1,5 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "../../../../../prisma";
+import { handleOptions, jsonResponse } from "../../cors";
+
+export async function OPTIONS() {
+  return handleOptions();
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,12 +17,12 @@ export async function GET(request: NextRequest) {
       include: { tag: true },
     });
 
-    return NextResponse.json({ data: books });
+    return jsonResponse({ data: books });
   } catch (error) {
     console.error("Error fetching popular books:", error);
-    return NextResponse.json(
+    return jsonResponse(
       { success: false, message: "เกิดข้อผิดพลาดภายในระบบ" },
-      { status: 500 }
+      500
     );
   }
 }

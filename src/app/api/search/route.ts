@@ -1,5 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "../../../../prisma";
+import { handleOptions, jsonResponse } from "../cors";
+
+export async function OPTIONS() {
+  return handleOptions();
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,7 +12,7 @@ export async function GET(request: NextRequest) {
     const q = searchParams.get("q") || "";
 
     if (!q) {
-      return NextResponse.json({
+      return jsonResponse({
         books: [],
         tags: [],
       });
@@ -25,7 +30,7 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
-    return NextResponse.json({
+    return jsonResponse({
       books: books.map((book) => ({
         ...book,
         type: "book",
@@ -39,9 +44,9 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error searching:", error);
-    return NextResponse.json(
+    return jsonResponse(
       { success: false, message: "เกิดข้อผิดพลาดภายในระบบ" },
-      { status: 500 }
+      500
     );
   }
 }
