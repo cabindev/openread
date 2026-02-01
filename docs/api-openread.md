@@ -7,6 +7,23 @@ https://openread.ssnthailand.com/api
 
 ---
 
+## API Endpoints Overview
+
+| Endpoint | Method | Auth | Status |
+|----------|--------|------|--------|
+| `/api/dashboard` | GET | Public | ✅ Available |
+| `/api/books` | GET | Public | ✅ Available |
+| `/api/books/{id}` | GET | Public | ✅ Available |
+| `/api/books/popular` | GET | Public | ✅ Available |
+| `/api/books/recent` | GET | Public | ✅ Available |
+| `/api/tags` | GET | Public | ✅ Available |
+| `/api/tags/{id}` | GET | Public | ✅ Available |
+| `/api/search` | GET | Public | ✅ Available |
+
+> **Note:** POST/PUT/DELETE operations ใช้ Server Actions ผ่าน Frontend เท่านั้น ไม่เปิดเป็น REST API
+
+---
+
 ## 1. Dashboard API
 
 ### GET /dashboard
@@ -28,7 +45,7 @@ GET https://openread.ssnthailand.com/api/dashboard
   },
   "popular_books": [
     {
-      "id": "uuid-string",
+      "id": "550e8400-e29b-41d4-a716-446655440000",
       "title": "หนังสือยอดนิยม",
       "imageUrl": "/images/uuid.jpg",
       "pdfUrl": "/pdfs/uuid.pdf",
@@ -37,14 +54,17 @@ GET https://openread.ssnthailand.com/api/dashboard
       "tagId": "tag-uuid",
       "tag": {
         "id": "tag-uuid",
-        "title": "หมวดหมู่"
+        "title": "หมวดหมู่",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
       },
-      "createdAt": "2025-01-15T10:30:00Z"
+      "createdAt": "2025-01-15T10:30:00.000Z",
+      "updatedAt": "2025-01-15T10:30:00.000Z"
     }
   ],
   "recent_books": [
     {
-      "id": "uuid-string",
+      "id": "550e8400-e29b-41d4-a716-446655440001",
       "title": "หนังสือล่าสุด",
       "imageUrl": "/images/uuid.jpg",
       "pdfUrl": "/pdfs/uuid.pdf",
@@ -53,9 +73,12 @@ GET https://openread.ssnthailand.com/api/dashboard
       "tagId": "tag-uuid",
       "tag": {
         "id": "tag-uuid",
-        "title": "หมวดหมู่"
+        "title": "หมวดหมู่",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
       },
-      "createdAt": "2025-01-20T14:00:00Z"
+      "createdAt": "2025-01-20T14:00:00.000Z",
+      "updatedAt": "2025-01-20T14:00:00.000Z"
     }
   ],
   "tags_with_count": [
@@ -73,20 +96,20 @@ GET https://openread.ssnthailand.com/api/dashboard
 ## 2. Books API
 
 ### GET /books
-ดึงรายการหนังสือทั้งหมด
+ดึงรายการหนังสือทั้งหมด (รองรับ pagination และ search)
 
 **Request:**
 ```
-GET https://openread.ssnthailand.com/api/books?page=1&per_page=10&search=นวนิยาย
+GET https://openread.ssnthailand.com/api/books?page=1&per_page=10&search=นวนิยาย&tag_id=xxx
 ```
 
 **Query Parameters:**
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| page | number | หน้าที่ต้องการ (default: 1) |
-| per_page | number | จำนวนต่อหน้า (default: 10) |
-| search | string | คำค้นหาในชื่อหนังสือ |
-| tag_id | string | กรองตามหมวดหมู่ |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| page | number | 1 | หน้าที่ต้องการ |
+| per_page | number | 10 | จำนวนต่อหน้า |
+| search | string | "" | คำค้นหาในชื่อหนังสือ |
+| tag_id | string | "" | กรองตามหมวดหมู่ |
 
 **Response:**
 ```json
@@ -102,10 +125,12 @@ GET https://openread.ssnthailand.com/api/books?page=1&per_page=10&search=นว�
       "tagId": "tag-uuid",
       "tag": {
         "id": "tag-uuid",
-        "title": "นวนิยาย"
+        "title": "นวนิยาย",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
       },
-      "createdAt": "2025-01-15T10:30:00Z",
-      "updatedAt": "2025-01-18T08:00:00Z"
+      "createdAt": "2025-01-15T10:30:00.000Z",
+      "updatedAt": "2025-01-18T08:00:00.000Z"
     }
   ],
   "meta": {
@@ -117,15 +142,17 @@ GET https://openread.ssnthailand.com/api/books?page=1&per_page=10&search=นว�
 }
 ```
 
+---
+
 ### GET /books/{id}
-ดึงรายละเอียดหนังสือ
+ดึงรายละเอียดหนังสือตาม ID
 
 **Request:**
 ```
 GET https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440000
 ```
 
-**Response:**
+**Response (Success):**
 ```json
 {
   "data": {
@@ -138,16 +165,28 @@ GET https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440
     "tagId": "tag-uuid",
     "tag": {
       "id": "tag-uuid",
-      "title": "นวนิยาย"
+      "title": "นวนิยาย",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-01T00:00:00.000Z"
     },
-    "createdAt": "2025-01-15T10:30:00Z",
-    "updatedAt": "2025-01-18T08:00:00Z"
+    "createdAt": "2025-01-15T10:30:00.000Z",
+    "updatedAt": "2025-01-18T08:00:00.000Z"
   }
 }
 ```
 
+**Response (Not Found):**
+```json
+{
+  "success": false,
+  "message": "ไม่พบหนังสือที่ต้องการ"
+}
+```
+
+---
+
 ### GET /books/popular
-ดึงหนังสือยอดนิยม
+ดึงหนังสือยอดนิยม (เรียงตามจำนวนวิว)
 
 **Request:**
 ```
@@ -155,31 +194,39 @@ GET https://openread.ssnthailand.com/api/books/popular?limit=8
 ```
 
 **Query Parameters:**
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| limit | number | จำนวนหนังสือ (default: 8) |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| limit | number | 8 | จำนวนหนังสือที่ต้องการ |
 
 **Response:**
 ```json
 {
   "data": [
     {
-      "id": "uuid-string",
+      "id": "550e8400-e29b-41d4-a716-446655440000",
       "title": "หนังสือยอดนิยมอันดับ 1",
       "imageUrl": "/images/uuid.jpg",
+      "pdfUrl": "/pdfs/uuid.pdf",
       "views": 5000,
       "rating": 5,
+      "tagId": "tag-uuid",
       "tag": {
         "id": "tag-uuid",
-        "title": "นวนิยาย"
-      }
+        "title": "นวนิยาย",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      "createdAt": "2025-01-15T10:30:00.000Z",
+      "updatedAt": "2025-01-18T08:00:00.000Z"
     }
   ]
 }
 ```
 
+---
+
 ### GET /books/recent
-ดึงหนังสือล่าสุด
+ดึงหนังสือล่าสุด (เรียงตามวันที่สร้าง)
 
 **Request:**
 ```
@@ -187,140 +234,32 @@ GET https://openread.ssnthailand.com/api/books/recent?limit=6
 ```
 
 **Query Parameters:**
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| limit | number | จำนวนหนังสือ (default: 6) |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| limit | number | 6 | จำนวนหนังสือที่ต้องการ |
 
 **Response:**
 ```json
 {
   "data": [
     {
-      "id": "uuid-string",
+      "id": "550e8400-e29b-41d4-a716-446655440000",
       "title": "หนังสือใหม่ล่าสุด",
       "imageUrl": "/images/uuid.jpg",
+      "pdfUrl": "/pdfs/uuid.pdf",
       "views": 50,
       "rating": 0,
+      "tagId": "tag-uuid",
       "tag": {
         "id": "tag-uuid",
-        "title": "สารคดี"
+        "title": "สารคดี",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
       },
-      "createdAt": "2025-01-20T14:00:00Z"
+      "createdAt": "2025-01-20T14:00:00.000Z",
+      "updatedAt": "2025-01-20T14:00:00.000Z"
     }
   ]
-}
-```
-
-### POST /books
-สร้างหนังสือใหม่ (เฉพาะ Manager)
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/books
-Content-Type: multipart/form-data
-```
-
-**Form Data:**
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| title | string | ✓ | ชื่อหนังสือ (ต้องไม่ซ้ำ) |
-| tagId | string | ✓ | ID ของหมวดหมู่ |
-| imageFile | File | ✓ | ไฟล์รูปภาพหน้าปก |
-| pdfFile | File | ✓ | ไฟล์ PDF หนังสือ |
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "เพิ่มหนังสือสำเร็จ",
-  "data": {
-    "id": "new-uuid",
-    "title": "หนังสือใหม่",
-    "imageUrl": "/images/new-uuid.jpg",
-    "pdfUrl": "/pdfs/new-uuid.pdf"
-  }
-}
-```
-
-### PUT /books/{id}
-แก้ไขหนังสือ (เฉพาะ Manager)
-
-**Request:**
-```
-PUT https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440000
-Content-Type: multipart/form-data
-```
-
-**Form Data:**
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| title | string | ✓ | ชื่อหนังสือ |
-| tagId | string | ✓ | ID ของหมวดหมู่ |
-| imageFile | File | | ไฟล์รูปภาพใหม่ (ถ้าต้องการเปลี่ยน) |
-| pdfFile | File | | ไฟล์ PDF ใหม่ (ถ้าต้องการเปลี่ยน) |
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "แก้ไขหนังสือสำเร็จ"
-}
-```
-
-### DELETE /books/{id}
-ลบหนังสือ (เฉพาะ Manager)
-
-**Request:**
-```
-DELETE https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440000
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "ลบหนังสือสำเร็จ"
-}
-```
-
-### POST /books/{id}/view
-เพิ่มจำนวนการเข้าชม
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440000/view
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "views": 1251
-}
-```
-
-### PUT /books/{id}/rating
-ให้คะแนนหนังสือ
-
-**Request:**
-```
-PUT https://openread.ssnthailand.com/api/books/550e8400-e29b-41d4-a716-446655440000/rating
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "stars": 5
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "ให้คะแนนสำเร็จ",
-  "rating": 5
 }
 ```
 
@@ -329,7 +268,7 @@ Content-Type: application/json
 ## 3. Tags API (Categories)
 
 ### GET /tags
-ดึงรายการหมวดหมู่ทั้งหมด
+ดึงรายการหมวดหมู่ทั้งหมด พร้อมจำนวนหนังสือ
 
 **Request:**
 ```
@@ -344,29 +283,31 @@ GET https://openread.ssnthailand.com/api/tags
       "id": "tag-uuid-1",
       "title": "นวนิยาย",
       "bookCount": 45,
-      "createdAt": "2025-01-01T00:00:00Z",
-      "updatedAt": "2025-01-15T10:00:00Z"
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-15T10:00:00.000Z"
     },
     {
       "id": "tag-uuid-2",
       "title": "สารคดี",
       "bookCount": 30,
-      "createdAt": "2025-01-01T00:00:00Z",
-      "updatedAt": "2025-01-10T08:00:00Z"
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "updatedAt": "2025-01-10T08:00:00.000Z"
     }
   ]
 }
 ```
 
+---
+
 ### GET /tags/{id}
-ดึงรายละเอียดหมวดหมู่
+ดึงรายละเอียดหมวดหมู่ พร้อมรายการหนังสือในหมวดหมู่
 
 **Request:**
 ```
 GET https://openread.ssnthailand.com/api/tags/tag-uuid-1
 ```
 
-**Response:**
+**Response (Success):**
 ```json
 {
   "data": {
@@ -377,309 +318,34 @@ GET https://openread.ssnthailand.com/api/tags/tag-uuid-1
         "id": "book-uuid",
         "title": "นวนิยายรักโรแมนติก",
         "imageUrl": "/images/book.jpg",
+        "pdfUrl": "/pdfs/book.pdf",
         "views": 1250,
-        "rating": 5
+        "rating": 5,
+        "tagId": "tag-uuid-1",
+        "createdAt": "2025-01-15T10:30:00.000Z",
+        "updatedAt": "2025-01-18T08:00:00.000Z"
       }
     ],
-    "createdAt": "2025-01-01T00:00:00Z",
-    "updatedAt": "2025-01-15T10:00:00Z"
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-15T10:00:00.000Z"
   }
 }
 ```
 
-### POST /tags
-สร้างหมวดหมู่ใหม่ (เฉพาะ Manager)
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/tags
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "title": "หมวดหมู่ใหม่"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "เพิ่มหมวดหมู่สำเร็จ",
-  "data": {
-    "id": "new-tag-uuid",
-    "title": "หมวดหมู่ใหม่"
-  }
-}
-```
-
-### PUT /tags/{id}
-แก้ไขหมวดหมู่ (เฉพาะ Manager)
-
-**Request:**
-```
-PUT https://openread.ssnthailand.com/api/tags/tag-uuid-1
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "title": "ชื่อหมวดหมู่ใหม่"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "แก้ไขหมวดหมู่สำเร็จ"
-}
-```
-
-### DELETE /tags/{id}
-ลบหมวดหมู่ (เฉพาะ Manager)
-
-**Request:**
-```
-DELETE https://openread.ssnthailand.com/api/tags/tag-uuid-1
-```
-
-**Response (Success):**
-```json
-{
-  "success": true,
-  "message": "ลบหมวดหมู่สำเร็จ"
-}
-```
-
-**Response (Error - มีหนังสืออยู่):**
+**Response (Not Found):**
 ```json
 {
   "success": false,
-  "message": "ไม่สามารถลบหมวดหมู่ได้ เนื่องจากมีหนังสือ 5 เล่มอยู่ในหมวดหมู่นี้"
+  "message": "ไม่พบหมวดหมู่ที่ต้องการ"
 }
 ```
 
 ---
 
-## 4. Members API
-
-### GET /members
-ดึงรายการสมาชิกทั้งหมด (เฉพาะ Manager)
-
-**Request:**
-```
-GET https://openread.ssnthailand.com/api/members?page=1&per_page=10&search=john
-```
-
-**Query Parameters:**
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| page | number | หน้าที่ต้องการ (default: 1) |
-| per_page | number | จำนวนต่อหน้า (default: 10) |
-| search | string | ค้นหาจากชื่อหรืออีเมล |
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": "member-uuid",
-      "name": "สมชาย ใจดี",
-      "email": "somchai@example.com",
-      "role": "Normal",
-      "createdAt": "2025-01-10T08:00:00Z",
-      "updatedAt": "2025-01-15T10:00:00Z"
-    }
-  ],
-  "meta": {
-    "current_page": 1,
-    "last_page": 50,
-    "per_page": 10,
-    "total": 500
-  }
-}
-```
-
-### GET /members/{id}
-ดึงรายละเอียดสมาชิก (เฉพาะ Manager)
-
-**Request:**
-```
-GET https://openread.ssnthailand.com/api/members/member-uuid
-```
-
-**Response:**
-```json
-{
-  "data": {
-    "id": "member-uuid",
-    "name": "สมชาย ใจดี",
-    "email": "somchai@example.com",
-    "role": "Normal",
-    "createdAt": "2025-01-10T08:00:00Z",
-    "updatedAt": "2025-01-15T10:00:00Z"
-  }
-}
-```
-
-### PUT /members/{id}
-แก้ไขข้อมูลสมาชิก (เฉพาะ Manager)
-
-**Request:**
-```
-PUT https://openread.ssnthailand.com/api/members/member-uuid
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "name": "สมชาย ใจดีมาก",
-  "email": "somchai.new@example.com",
-  "role": "Manager"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "แก้ไขข้อมูลสมาชิกสำเร็จ"
-}
-```
-
----
-
-## 5. Authentication API
-
-### POST /auth/sign-in
-เข้าสู่ระบบ
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/auth/sign-in
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-**Response (Success):**
-```json
-{
-  "success": true,
-  "message": "เข้าสู่ระบบสำเร็จ",
-  "data": {
-    "id": "member-uuid",
-    "name": "สมชาย ใจดี",
-    "email": "user@example.com",
-    "isManager": false
-  }
-}
-```
-
-**Response (Error):**
-```json
-{
-  "success": false,
-  "message": "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
-}
-```
-
-### POST /auth/sign-up
-ลงทะเบียนสมาชิกใหม่
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/auth/sign-up
-Content-Type: application/json
-```
-
-**Body:**
-```json
-{
-  "name": "สมหญิง รักอ่าน",
-  "email": "somying@example.com",
-  "password": "securepassword123"
-}
-```
-
-**Response (Success):**
-```json
-{
-  "success": true,
-  "message": "สมัครสมาชิกสำเร็จ"
-}
-```
-
-**Response (Error - อีเมลซ้ำ):**
-```json
-{
-  "success": false,
-  "message": "อีเมลนี้ถูกใช้งานแล้ว"
-}
-```
-
-### POST /auth/logout
-ออกจากระบบ
-
-**Request:**
-```
-POST https://openread.ssnthailand.com/api/auth/logout
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "ออกจากระบบสำเร็จ"
-}
-```
-
-### GET /auth/session
-ตรวจสอบ Session ปัจจุบัน
-
-**Request:**
-```
-GET https://openread.ssnthailand.com/api/auth/session
-```
-
-**Response (Logged In):**
-```json
-{
-  "isLoggedIn": true,
-  "data": {
-    "id": "member-uuid",
-    "name": "สมชาย ใจดี",
-    "email": "user@example.com",
-    "isManager": true
-  }
-}
-```
-
-**Response (Not Logged In):**
-```json
-{
-  "isLoggedIn": false,
-  "data": null
-}
-```
-
----
-
-## 6. Search API
+## 4. Search API
 
 ### GET /search
-ค้นหาข้อมูลทั้งหมด
+ค้นหาหนังสือและหมวดหมู่
 
 **Request:**
 ```
@@ -687,9 +353,9 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
 ```
 
 **Query Parameters:**
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| q | string | คำค้นหา |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| q | string | Yes | คำค้นหา |
 
 **Response:**
 ```json
@@ -699,6 +365,18 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
       "id": "book-uuid",
       "title": "นวนิยายรักโรแมนติก",
       "imageUrl": "/images/book.jpg",
+      "pdfUrl": "/pdfs/book.pdf",
+      "views": 1250,
+      "rating": 5,
+      "tagId": "tag-uuid",
+      "tag": {
+        "id": "tag-uuid",
+        "title": "นวนิยาย",
+        "createdAt": "2025-01-01T00:00:00.000Z",
+        "updatedAt": "2025-01-01T00:00:00.000Z"
+      },
+      "createdAt": "2025-01-15T10:30:00.000Z",
+      "updatedAt": "2025-01-18T08:00:00.000Z",
       "type": "book"
     }
   ],
@@ -710,6 +388,14 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
       "type": "tag"
     }
   ]
+}
+```
+
+**Response (Empty Query):**
+```json
+{
+  "books": [],
+  "tags": []
 }
 ```
 
@@ -737,6 +423,7 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
 | id | string (UUID) | Primary Key |
 | title | string | ชื่อหมวดหมู่ (Unique) |
 | books | Book[] | Relation ไปยังหนังสือ |
+| bookCount | integer | จำนวนหนังสือในหมวดหมู่ (computed) |
 | createdAt | datetime | วันที่สร้าง |
 | updatedAt | datetime | วันที่แก้ไขล่าสุด |
 
@@ -753,57 +440,13 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
 
 ---
 
-## Role Values
-
-| Value | Label | Description |
-|-------|-------|-------------|
-| Normal | สมาชิกทั่วไป | สามารถอ่านหนังสือและให้คะแนนได้ |
-| Manager | ผู้จัดการ | สามารถจัดการหนังสือ หมวดหมู่ และสมาชิกได้ |
-
----
-
 ## Error Responses
-
-### 400 Bad Request
-```json
-{
-  "success": false,
-  "message": "ข้อมูลไม่ถูกต้อง",
-  "errors": [
-    { "field": "title", "message": "กรุณากรอกชื่อหนังสือ" }
-  ]
-}
-```
-
-### 401 Unauthorized
-```json
-{
-  "success": false,
-  "message": "กรุณาเข้าสู่ระบบ"
-}
-```
-
-### 403 Forbidden
-```json
-{
-  "success": false,
-  "message": "คุณไม่มีสิทธิ์ในการดำเนินการนี้"
-}
-```
 
 ### 404 Not Found
 ```json
 {
   "success": false,
   "message": "ไม่พบข้อมูลที่ต้องการ"
-}
-```
-
-### 409 Conflict
-```json
-{
-  "success": false,
-  "message": "ชื่อหนังสือนี้มีอยู่แล้ว"
 }
 ```
 
@@ -822,7 +465,6 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
 | Page | URL |
 |------|-----|
 | หน้าแรก | / |
-| รายการหนังสือ | /books |
 | รายละเอียดหนังสือ | /books/{id} |
 | หมวดหมู่ทั้งหมด | /tags |
 | หนังสือในหมวดหมู่ | /tags/{id} |
@@ -851,51 +493,37 @@ GET https://openread.ssnthailand.com/api/search?q=นวนิยาย
 
 ---
 
-## File Upload Specifications
+## CORS Configuration
 
-### Image Files
-- **Allowed Types:** JPG, JPEG, PNG, GIF, WebP
-- **Max Size:** 15 MB
-- **Storage Path:** `/public/images/`
-- **Naming:** UUID-based (e.g., `550e8400-e29b-41d4-a716-446655440000.jpg`)
-
-### PDF Files
-- **Allowed Types:** PDF
-- **Max Size:** 15 MB
-- **Storage Path:** `/public/pdfs/`
-- **Naming:** UUID-based (e.g., `550e8400-e29b-41d4-a716-446655440000.pdf`)
+API รองรับ Cross-Origin requests สำหรับการเรียกใช้จากเว็บอื่น
 
 ---
 
-## Security Features
+## Usage Examples
 
-- Password hashing with bcrypt (10 rounds)
-- Server-side session validation (iron-session)
-- Secure HTTP-only cookies
-- Role-based access control (RBAC)
-- Email uniqueness constraints
-- HTTPS-only cookie transmission
-- Input validation with Zod schemas
+### JavaScript (Fetch)
+```javascript
+// ดึงหนังสือยอดนิยม
+const response = await fetch('https://openread.ssnthailand.com/api/books/popular?limit=8');
+const data = await response.json();
+console.log(data.data); // Array of books
 
----
-
-## Deployment
-
-### Plesk Panel
-
-1. Upload files to server
-2. Install dependencies: `npm install`
-3. Generate Prisma client: `npx prisma generate`
-4. Run migrations: `npx prisma migrate deploy`
-5. Build: `npm run build`
-6. Start: `npm start`
-
-### Environment Variables
+// ค้นหาหนังสือ
+const searchResponse = await fetch('https://openread.ssnthailand.com/api/search?q=นวนิยาย');
+const searchData = await searchResponse.json();
+console.log(searchData.books); // Array of matching books
 ```
-DATABASE_URL="mysql://user:password@localhost:3306/openread"
-SESSION_SECRET="your-32-character-or-longer-secret-key"
-NODE_ENV=production
-PORT=3000
+
+### cURL
+```bash
+# ดึงข้อมูล Dashboard
+curl -X GET "https://openread.ssnthailand.com/api/dashboard"
+
+# ดึงหนังสือพร้อม pagination
+curl -X GET "https://openread.ssnthailand.com/api/books?page=1&per_page=10"
+
+# ดึงหมวดหมู่ทั้งหมด
+curl -X GET "https://openread.ssnthailand.com/api/tags"
 ```
 
 ---
@@ -909,26 +537,25 @@ Import endpoints ใน Postman:
 
 ### Headers:
 ```
-Content-Type: application/json
 Accept: application/json
 ```
-
-### For File Upload:
-```
-Content-Type: multipart/form-data
-```
-
----
-
-## Rate Limiting
-
-ยังไม่มีการกำหนด Rate Limiting ในเวอร์ชันปัจจุบัน
 
 ---
 
 ## Changelog
 
-### v0.2.0 (Current)
+### v0.3.0 (Current)
+- Added REST API routes for external access
+- GET /api/dashboard - stats and featured content
+- GET /api/books - list with pagination, search, filter
+- GET /api/books/{id} - book details
+- GET /api/books/popular - popular books
+- GET /api/books/recent - recent books
+- GET /api/tags - list all tags
+- GET /api/tags/{id} - tag details with books
+- GET /api/search - search books and tags
+
+### v0.2.0
 - Added delete functionality for books and tags
 - Updated member management interface
 - Green color scheme consistency
